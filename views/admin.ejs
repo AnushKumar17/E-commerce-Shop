@@ -1,4 +1,4 @@
-<%- include('./partials/header') %>
+<!-- <%- include('./partials/header') %>
     <div class="w-full h-screen flex items-start px-20 py-20">
         <div class="w-[25%] flex h-screen flex-col items-start">
             <div class="flex flex-col">
@@ -110,4 +110,97 @@
             </div>
         </div>
     </div>
-    <%- include('./partials/footer') %>
+    <%- include('./partials/footer') %> -->
+
+    
+
+    <!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>E-commerce</title>
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    
+    <body class="font-['Helvetica_Now_Display'] bg-gray-100">
+    
+        <!-- Navigation Bar -->
+        <nav class="w-full flex justify-between items-center px-6 py-4 bg-white shadow-md">
+            <h3 class="text-3xl font-bold text-gray-800">E-commerce</h3>
+    
+            <% var loggedin = typeof loggedin !== "undefined" ? loggedin : true %>
+            <% if(loggedin){ %>
+                <div class="flex space-x-6">
+                    <a href="/owners/admin" class=" text-lg text-green-700 hover:text-blue-500 transition">Add item to shop</a>
+                    <a href="/users/logout" class=" text-lg text-red-600 hover:text-red-800 transition">Logout</a>
+                </div>
+            <% } %>
+            
+        </nav>
+    
+        <!-- Main Content -->
+        <div class="w-full h-screen flex items-start px-20 py-20">
+            <div class="w-[25%] flex h-screen flex-col items-start">
+                
+                <div class="pr-8">
+                    <div class="block w-fit mb-2 text-xl font-extrabold">Heading</div>
+                    <p>Lorem ipsum dolor sit amet cestiae exercitationem unde tenetur minima pariatur fugiat mollitia natus, dolorem quisquam est facere, officia iste quaerat nisi illum?</p>
+                </div>
+                
+                <div class="pt-8">
+                    <!-- Form for sorting options -->
+                    <form action="/shop" method="GET">
+                        <a class="block w-fit mb-2 text-xl font-extrabold">Sort by</a>
+                        
+                        <!-- Radio buttons for sorting options -->
+                        <div class="flex flex-col space-y-2">
+                            <label class="block">
+                                <input type="radio" name="sort" value="default" id="default" checked class="mr-2"> Default
+                            </label>
+                            <label class="block">
+                                <input type="radio" name="sort" value="name" id="name" class="mr-2"> Name
+                            </label>
+                            <label class="block">
+                                <input type="radio" name="sort" value="price" id="price" class="mr-2"> Price
+                            </label>
+                            <label class="block">
+                                <input type="radio" name="sort" value="discount" id="discount" class="mr-2"> Discount
+                            </label>
+                        </div>
+        
+                        <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md">Sort</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="w-[75%] flex flex-wrap gap-5 h-screen">
+                <% products.forEach(function(product) { %>
+                    <div class="w-60">
+                        <div class="w-full h-52 flex items-center justify-center bg-[<%= product.bgcolor %>]">
+                            <img class="h-[12rem]" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="">
+                        </div>
+                        <div class="flex justify-between items-center bg-[<%= product.panelcolor %>] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-extrabold text-[<%= product.textcolor %>]">
+                                    <%= product.name %>
+                                </h3>
+                                <h4 class="text-lg font-semibold text-[<%= product.textcolor %>]">
+                                    ₹ <%= product.price %>
+                                </h4>
+                                <h4 class="text-sm font-medium text-[<%= product.textcolor %>]">
+                                    ₹ <%= product.discount %> OFF
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+            
+        </div>
+    
+    </body>
+    </html>
+    

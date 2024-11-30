@@ -1,61 +1,69 @@
 <%- include('./partials/header') %>
 
-    <% if(success.length>0){ %>
-        <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
-            <span class="inline-block mt-1 mb-1 text-white">
-                <%= success %>
-            </span>
-        </div>
-        <% } %>
+<% if(success.length > 0) { %>
+    <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+        <span class="inline-block mt-1 mb-1 text-white">
+            <%= success %>
+        </span>
+    </div>
+<% } %>
 
-
-    <div class="w-full h-screen flex items-start px-20 py-20">
-        <div class="w-[25%] flex h-screen flex-col items-start">
-            <div class="flex items-center gap-2">
-                <h3>sort by</h3>
-                <form action="/shop">
-                    <select class="border-[1px] px-2 py-1" name="sortby" id="">
-                        <option value="popular">Popular</option>
-                        <option value="newest">Newest</option>
-                    </select>
-                </form>
-            </div>
-            <div class="flex flex-col mt-20">
-                <a class="block w-fit mb-2" href="">New Collection</a>
-                <a class="block w-fit mb-2" href="">All Products</a>
-                <a class="block w-fit mb-2" href="">Discounted Products</a>
-            </div>
-            <div class="mt-32">
-                <a class="block w-fit mb-2" href="">Filter by :</a>
-                <a class="block w-fit mb-2" href="">Availability</a>
-                <a class="block w-fit mb-2" href="">Discount</a>
-            </div>
+<div class="w-full h-screen flex items-start px-20 py-20">
+    <div class="w-[25%] flex h-screen flex-col items-start">
+        
+        <div class="pr-8">
+            <div class="block w-fit mb-2 text-xl font-extrabold">Heading</div>
+            <p>Lorem ipsum dolor sit amet cestiae exercitationem unde tenetur minima pariatur fugiat mollitia natus, dolorem quisquam est facere, officia iste quaerat nisi illum?</p>
         </div>
-        <div class="w-[75%] flex flex-col gap-5 h-screen">
-            <div class="flex items-start gap-5">
-                <% products.forEach(function(product){ %>
-                    <div class="w-60">
-                        <div class="w-full h-52 flex items-center justify-center bg-[<%= product.bgcolor %>]">
-                            <img class="h-[12rem]" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
-                                alt="">
-                        </div>
-                        <div
-                            class="flex justify-between bg-[<%= product.panelcolor %>] items-center px-4 py-4 text-[<%= product.textcolor %>]">
-                            <div>
-                                <h3>
-                                    <%= product.name %> 
-                                </h3>
-                                <h4>₹ <%= product.price %>
-                                </h4>
-                            </div>
-                            <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="/addtocart/<%= product._id %>">
-                                <i class="ri-add-line"></i>
-                            </a>
-                            
-                        </div>
-                    </div>
-                    <% }) %>
-            </div>
+        
+        <div class="pt-8">
+            <!-- Form for sorting options -->
+            <form action="/shop" method="GET">
+                <a class="block w-fit mb-2 text-xl font-extrabold">Sort by</a>
+                
+                <!-- Radio buttons for sorting options -->
+                <div class="flex flex-col space-y-2">
+                    <label class="block">
+                        <input type="radio" name="sort" value="default" id="default" checked class="mr-2"> Default
+                    </label>
+                    <label class="block">
+                        <input type="radio" name="sort" value="name" id="name" class="mr-2"> Name
+                    </label>
+                    <label class="block">
+                        <input type="radio" name="sort" value="price" id="price" class="mr-2"> Price
+                    </label>
+                    <label class="block">
+                        <input type="radio" name="sort" value="discount" id="discount" class="mr-2"> Discount
+                    </label>
+                </div>
+
+                <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md">Sort</button>
+            </form>
         </div>
     </div>
-    <%- include('./partials/footer') %>
+    
+    <div class="w-[75%] flex flex-wrap gap-5 h-screen">
+        <% products.forEach(function(product) { %>
+            <div class="w-60">
+                <div class="w-full h-52 flex items-center justify-center bg-[<%= product.bgcolor %>]">
+                    <img class="h-[12rem]" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="">
+                </div>
+                <div class="flex justify-between items-center bg-[<%= product.panelcolor %>] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-extrabold text-[<%= product.textcolor %>]">
+                            <%= product.name %>
+                        </h3>
+                        <h4 class="text-lg font-semibold text-[<%= product.textcolor %>]">
+                            ₹ <%= product.price %>
+                        </h4>
+                        <h4 class="text-sm font-medium text-[<%= product.textcolor %>]">
+                            ₹ <%= product.discount %> OFF
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<%- include('./partials/footer') %>
